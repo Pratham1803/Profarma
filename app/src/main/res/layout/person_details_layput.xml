@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="15dp"
+    android:backgroundTint="@color/white">
+
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/simple_shape"
+        android:hint="Enter Company Name"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="15dp"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/edtNum"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/simple_shape"
+        android:hint="Enter Conact Number Here"
+        android:inputType="phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtName"
+        android:layout_margin="15dp"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/edtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/simple_shape"
+        android:hint="Enter Address Here"
+        android:inputType="textPostalAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtNum"
+        android:layout_margin="15dp"
+        android:padding="10dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGenerateBill"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Generate Bill"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:textColor="@color/font_color_dark"
+        android:fontFamily="@font/inria_sans"
+        android:background="@drawable/btn_shape"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtAddress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="15dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
