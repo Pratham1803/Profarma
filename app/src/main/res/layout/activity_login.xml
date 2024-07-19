@@ -62,6 +62,7 @@
             android:layout_height="50dp"
             android:background="@drawable/textbox_shape"
             android:fontFamily="@font/inria_sans"
+            android:inputType="text"
             android:hint="Enter User Name Here"
             android:padding="5dp" />
 

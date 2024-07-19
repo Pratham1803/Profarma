@@ -55,7 +55,13 @@ public class EmployeeHome extends AppCompatActivity{
                 changeFragment(new Cart());
                 return true;
             } else if(id == R.id.menuHistory){
-
+                Toast.makeText(this, "History Will Display Later...", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if(id == R.id.menuProfile){
+                Toast.makeText(this, "Profile Will Display Later...", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (id == R.id.menuAllProduct) {
+                Toast.makeText(this, "Products List and Analysis Will Display Later...", Toast.LENGTH_SHORT).show();
                 return true;
             }
             return false;

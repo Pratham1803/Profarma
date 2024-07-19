@@ -8,6 +8,5 @@
     <style name="Theme.Profarma" parent="Base.Theme.Profarma" />
     <style name="MenuBox" parent="Theme.Profarma">
         <item name="android:background">@drawable/menu_shape</item>
-        "
     </style>
 </resources>

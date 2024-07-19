@@ -59,6 +59,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 else if (layout.getId() == R.id.layoutSmall)
                     category.setSubCategory("Small");
 
+                bindingLayout.layoutSubCategory.setVisibility(View.GONE);
+                bindingLayout.imgArrow.setRotation(0);
+
                 Intent intent = new Intent(context, ProductList.class);
                 intent.putExtra("Category", category);
                 context.startActivity(intent);

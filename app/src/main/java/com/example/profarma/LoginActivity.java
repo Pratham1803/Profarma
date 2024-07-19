@@ -31,13 +31,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Login Successful", Toast.LENGTH_LONG).show();
-                if(binding.chkAdmin.isChecked())
-                    startActivity(new Intent(context, AdminHome.class));
-                else
-                    startActivity(new Intent(context, EmployeeHome.class));
+                if (isDetailsFilled()) {
+                    if (binding.edUserName.getText().toString().equals("admin") && binding.edPsw.getText().toString().equals("admin") && (binding.chkAdmin.isChecked())) {
+                        startActivity(new Intent(context, AdminHome.class));
+                        Toast.makeText(context, "Login Successful, Welcome Admin", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else if ((binding.edUserName.getText().toString().equals("user")) && (binding.edPsw.getText().toString().equals("user"))) {
+                        if (binding.chkAdmin.isChecked()) {
+                            Toast.makeText(context, "Invalid User Name or Password for Admin!!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            startActivity(new Intent(context, EmployeeHome.class));
+                            Toast.makeText(context, "Login Successful", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    } else {
+                        Toast.makeText(context, "Invalid Username or Password", Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         });
+    }
+
+    private boolean isDetailsFilled() {
+        if (binding.edUserName.getText().toString().isEmpty()) {
+            binding.edUserName.setError("Please Enter Username");
+            binding.edUserName.requestFocus();
+            return false;
+        } else if (binding.edPsw.getText().toString().isEmpty()) {
+            binding.edPsw.setError("Please Enter Password");
+            binding.edPsw.requestFocus();
+            return false;
+        }
+        return true;
     }
 
     @Override
