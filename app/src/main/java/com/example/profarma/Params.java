@@ -15,6 +15,7 @@ public class Params {
     private static StorageReference storageReference; // Firebase storage reference to store the files and images
     private static HashMap<String, Product> mapProduct; // Map of products
     private static HashMap<String, ArrayList<String>> mapProductCategory; // Map of product categories
+    private static ArrayList<String> arrCart; // List of product categories
 
     // Get the instance of the Params class
     private Params() {
@@ -22,6 +23,15 @@ public class Params {
         storageReference = FirebaseStorage.getInstance().getReference(); // Get the firebase storage reference
         mapProduct = new HashMap<>(); // Initialize the map of products
         mapProductCategory = new HashMap<>(); // Initialize the map of product categories
+        arrCart = new ArrayList<>(); // Initialize the list of product categories
+    }
+
+    public static ArrayList<String> getArrCart() {
+        return arrCart;
+    }
+
+    public static void setArrCart(ArrayList<String> arrCart) {
+        Params.arrCart = arrCart;
     }
 
     public static DatabaseReference getDbReference() {

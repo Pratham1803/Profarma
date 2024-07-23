@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.profarma.R;
 import com.example.profarma.model.OrderCart;
+import com.example.profarma.model.OrderProduct;
 import com.example.profarma.model.Product;
 
 import java.util.List;
 
 public class Bill_product_adapter extends RecyclerView.Adapter<Bill_product_adapter.ViewHolder> {
     private final Context context; // context
-    private final List<Product> lsProduct = OrderCart.getLsProduct(); // data source of the list adapter
+    private final List<OrderProduct> lsProduct;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txtHsnNum; // hsn number
@@ -58,8 +59,9 @@ public class Bill_product_adapter extends RecyclerView.Adapter<Bill_product_adap
     }
 
     // constructor of adapter class
-    public Bill_product_adapter(Context context) {
+    public Bill_product_adapter(Context context, List<OrderProduct> lsProduct) {
         this.context = context;
+        this.lsProduct = lsProduct;
     }
 
     @NonNull
@@ -78,12 +80,13 @@ public class Bill_product_adapter extends RecyclerView.Adapter<Bill_product_adap
         // with that element
         holder.getTxtHsnNum().setText(String.valueOf(position + 1));
         holder.getTxtProductName().setText(lsProduct.get(position).getProductName());
-        int quantity = Integer.parseInt(lsProduct.get(position).getQuantity());
-        int rate = Integer.parseInt(lsProduct.get(position).getPrice());
-        int total = quantity * rate;
+        float quantity = Float.parseFloat(lsProduct.get(position).getProductQty());
+        float rate = Float.parseFloat(lsProduct.get(position).getProductPrice());
+        float total = quantity * rate;
         holder.getTxtQuantity().setText(String.valueOf(quantity));
         holder.getTxtRate().setText(String.valueOf(rate));
-        holder.getTxtTotal().setText(String.valueOf(total));
+
+        holder.getTxtTotal().setText(String.format("%.2f", total));
     }
 
     @Override

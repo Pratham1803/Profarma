@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -40,13 +43,22 @@ public class ProductList extends AppCompatActivity {
             parentCategory = (String) getIntent().getSerializableExtra("Category");
         }
 
+        ArrayList<String> subCategories = new ArrayList<String>() {{
+            add("All");
+            add("Large");
+            add("Medium");
+            add("Small");
+        }};
+
+        binding.spFilter.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, subCategories));
+
         // Set the title of the activity
         setTitle(parentCategory);
         binding.txtTitleProductList.setText(parentCategory);
-        binding.txtCartCount.setText(String.valueOf(OrderCart.getLsProduct().size()));
+        binding.txtCartCount.setText(String.valueOf(Params.getArrCart().size()));
 
         // set recycler view
-        ArrayList<String> arrProducts = Params.getMapProductCategory().get(parentCategory);
+        ArrayList<String> arrProducts = new ArrayList<>(Params.getMapProductCategory().get(parentCategory));
         if (arrProducts.isEmpty()) {
             Toast.makeText(this, "No Products Available, Contact Admin To Add Products", Toast.LENGTH_SHORT).show();
         }
@@ -60,7 +72,8 @@ public class ProductList extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 ArrayList<String> searchList = new ArrayList<>();
                 for (String product : arrProducts) {
-                    if (product.toLowerCase().contains(query.toLowerCase())) {
+                    Product productObj = Params.getMapProduct().get(product);
+                    if (productObj.getProductName().toLowerCase().contains(query.toLowerCase())) {
                         searchList.add(product);
                     }
                 }
@@ -72,7 +85,8 @@ public class ProductList extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 ArrayList<String> searchList = new ArrayList<>();
                 for (String product : arrProducts) {
-                    if (product.toLowerCase().contains(newText.toLowerCase())) {
+                    Product productObj = Params.getMapProduct().get(product);
+                    if (productObj.getProductName().toLowerCase().contains(newText.toLowerCase())) {
                         searchList.add(product);
                     }
                 }
@@ -86,13 +100,37 @@ public class ProductList extends AppCompatActivity {
             intent.putExtra("OpenCart", "open Cart");
             startActivity(intent);
         });
+
+        binding.spFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    productListAdapter.setLocalDataSet(arrProducts);
+                    return;
+                }
+                ArrayList<String> filterList = new ArrayList<>();
+                for (String product : arrProducts) {
+                    Product productObj = Params.getMapProduct().get(product);
+                    assert productObj != null;
+                    if (productObj.getCategory().equals(parentCategory) && productObj.getSubCategory().equals(subCategories.get(position))) {
+                        filterList.add(product);
+                    }
+                }
+                productListAdapter.setLocalDataSet(filterList);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                productListAdapter.setLocalDataSet(arrProducts);
+            }
+        });
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        Intent intent = new Intent(this, EmployeeHome.class);
-//        intent.putExtra("OpenHome", "open Home");
-//        startActivity(intent);
-//        super.onBackPressed();
-//    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, EmployeeHome.class);
+        intent.putExtra("OpenHome", "open Home");
+        startActivity(intent);
+        super.onBackPressed();
+    }
 }

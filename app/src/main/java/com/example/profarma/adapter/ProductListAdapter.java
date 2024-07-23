@@ -32,6 +32,15 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             bindingLayout = LayoutProductBinding.bind(itemView);
+        }
+
+        public void bind(int position) {
+            Product product = Params.getMapProduct().get(localDataSet.get(position));
+
+            bindingLayout.txtProductName.setText(product.getProductName());
+            bindingLayout.txtProductPrice.setText("Price: ₹" + product.getPrice());
+            Glide.with(context).load(product.getImg()).into(bindingLayout.imgProduct);
+
             bindingLayout.imgBtnMinus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,7 +73,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                     TextView txtQuantity = parent_binding.txtCartCount;
                     int quantity = Integer.parseInt(bindingLayout.txtQuantity.getText().toString());
 
-                    if(quantity == 0 ){
+                    if (quantity == 0) {
                         Toast.makeText(context, "Please Add The Quantity!!", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -72,21 +81,23 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                     int cartCount = Integer.parseInt(txtQuantity.getText().toString());
                     cartCount++;
                     txtQuantity.setText(String.valueOf(cartCount));
-                    int position = getAdapterPosition();
 
-                    OrderCart.getLsProduct().add(0, Params.getMapProduct().get(localDataSet.get(position)));
-                    OrderCart.getLsProduct().get(0).setQuantity(String.valueOf(quantity));
-                    localDataSet.remove(position);
-                    notifyItemRemoved(position);
-                    // Add the product to the cart
+                    assert product != null;
+                    Params.getDbReference().child("cart").child(product.getProductId()).setValue(true)
+                            .addOnSuccessListener(aVoid -> {
+                                if (position >= 0 && position < localDataSet.size()) {
+                                    localDataSet.remove(position); // Remove the item
+                                    notifyItemRemoved(position); // Notify the adapter about the removal
+                                    notifyItemRangeChanged(position, localDataSet.size() - position); // Update the positions of the remaining items
+                                }
+                                Toast.makeText(context, "Product Added to Cart", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(context, "Failed to add product to cart", Toast.LENGTH_SHORT).show();
+                            });
                 }
             });
         }
-
-        public LayoutProductBinding getBindingLayout() {
-            return bindingLayout;
-        }
-
     }
 
     public ProductListAdapter(ArrayList<String> dataSet, Context context, ActivityProductListBinding parent_binding) {
@@ -95,7 +106,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         this.parent_binding = parent_binding;
     }
 
-    public void setLocalDataSet(ArrayList<String> dataSet){
+    public void setLocalDataSet(ArrayList<String> dataSet) {
         this.localDataSet = dataSet;
         notifyDataSetChanged();
     }
@@ -110,10 +121,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = Params.getMapProduct().get(localDataSet.get(position));
-        holder.getBindingLayout().txtProductName.setText(product.getProductName());
-        holder.getBindingLayout().txtProductPrice.setText("Price: ₹" + product.getPrice());
-        Glide.with(context).load(product.getImg()).into(holder.getBindingLayout().imgProduct);
+        holder.bind(position);
     }
 
     @Override

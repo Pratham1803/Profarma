@@ -29,28 +29,30 @@ class ProductModule(private val binding: ActivityAdminHomeBinding) {
     fun addProduct(layoutProductBinding: AddProductLayoutBinding) {
         bindingView = layoutProductBinding // Set the layout product binding to the binding view
         product = Product() // Initialize the product object
-        sweetAlertDialog = SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE) // Initialize the sweet alert dialog
+        sweetAlertDialog = SweetAlertDialog(
+            context,
+            SweetAlertDialog.PROGRESS_TYPE
+        ) // Initialize the sweet alert dialog
         sweetAlertDialog.setTitleText("Loading...") // Set the title of the dialog
         sweetAlertDialog.setCancelable(false) // Set the dialog to not cancelable
         sweetAlertDialog.show() // Show the dialog
-        // Add product button click listener to add product
-        bindingView.btnAddProduct.setOnClickListener {
-            product.productName =
-                bindingView.edtProductName.text.toString()  // Get the product name from the edit text
-            product.price =
-                bindingView.edtProductPrice.text.toString() // Get the retail price from the edit text
-            product.quantity =
-                bindingView.edtProductQuan.text.toString() // Get the quantity from the edit text
-            product.category =
-                bindingView.spCategory.selectedItem.toString() // Get the category from the spinner
-            product.subCategory =
-                bindingView.spSubCategory.selectedItem.toString() // Get the sub category from the edit text
 
-            // Add product to database if all fields are filled and show dialog
-            if (verifyDetails()) { // Verify if all fields are filled
-                dbUploadProductDetails() // Save product to database
-            }
+        product.productName =
+            bindingView.edtProductName.text.toString()  // Get the product name from the edit text
+        product.price =
+            bindingView.edtProductPrice.text.toString() // Get the retail price from the edit text
+        product.quantity =
+            bindingView.edtProductQuan.text.toString() // Get the quantity from the edit text
+        product.category =
+            bindingView.spCategory.selectedItem.toString() // Get the category from the spinner
+        product.subCategory =
+            bindingView.spSubCategory.selectedItem.toString() // Get the sub category from the edit text
+
+        // Add product to database if all fields are filled and show dialog
+        if (verifyDetails()) { // Verify if all fields are filled
+            dbUploadProductDetails() // Save product to database
         }
+
     }
 
     // Verify if all fields are filled
@@ -75,6 +77,9 @@ class ProductModule(private val binding: ActivityAdminHomeBinding) {
 
     // upload product data in database
     private fun dbUploadProductDetails() {
+        val ref =
+            Params.getDbReference().child("products").child(product.category).push()
+        product.productId = ref.key.toString() // Set the product ID
         // Upload bitmap to Firebase Storage
         val image: String = product.productId + ".jpg" // setting the name of image
         val baos = ByteArrayOutputStream() // initializing byte array output stream
@@ -96,10 +101,6 @@ class ProductModule(private val binding: ActivityAdminHomeBinding) {
                     .child(image).downloadUrl.addOnSuccessListener { // On successful download URL
                         product.img = it.toString() // Set the image URL
                         // Save product details to Firebase database
-                        val ref =
-                            Params.getDbReference().child("products").child(product.category).push()
-
-                        product.productId = ref.key.toString() // Set the product ID
                         ref.setValue(product)
                             .addOnSuccessListener { // On successful save
                                 sweetAlertDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE) // Change the dialog type to success
@@ -119,6 +120,7 @@ class ProductModule(private val binding: ActivityAdminHomeBinding) {
 
     // Function to load the products from the database
     fun dbLoadProducts() {
+        loadCart()
         Params.getDbReference().child("products")
             .addValueEventListener(object : // Add a value event listener to the database reference
                 ValueEventListener {
@@ -179,5 +181,20 @@ class ProductModule(private val binding: ActivityAdminHomeBinding) {
                     .show() // Show error message
                 Log.d("ProductLog", "dbAddCategory: " + it.message) // Log the error message
             }
+    }
+
+    fun loadCart() {
+        Params.getDbReference().child("cart").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Params.getArrCart().clear()
+                for (productSnapshot in snapshot.children) {
+                    Params.getArrCart().add(productSnapshot.key!!)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("ErrorMsg", "onCancelled: " + error.message)
+            }
+        })
     }
 }

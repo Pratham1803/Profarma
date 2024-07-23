@@ -10,15 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.profarma.Params;
 import com.example.profarma.R;
 import com.example.profarma.databinding.LayoutCartProductBinding;
+import com.example.profarma.model.OrderCart;
+import com.example.profarma.model.OrderProduct;
 import com.example.profarma.model.Product;
 
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartAdapterViewHolder>{
-    private ArrayList<Product> localDataSet;
+    private ArrayList<String> localDataSet;
     private Context context;
+    private OrderCart orderCart;
 
     public class CartAdapterViewHolder extends RecyclerView.ViewHolder{
         private final LayoutCartProductBinding bindingLayout;
@@ -42,9 +46,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartAdapterVie
 
     }
 
-    public CartAdapter(ArrayList<Product> dataSet, Context context) {
+    public CartAdapter(ArrayList<String> dataSet, Context context, OrderCart orderCart) {
         this.localDataSet = dataSet;
         this.context = context;
+        this.orderCart = orderCart;
     }
 
     @NonNull
@@ -57,13 +62,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartAdapterVie
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CartAdapterViewHolder holder, int position) {
-        holder.getBindingLayout().txtProductName.setText(localDataSet.get(position).getProductName());
+        Product product = Params.getMapProduct().get(localDataSet.get(position));
+        holder.getBindingLayout().txtProductName.setText(product.getProductName());
 
-        holder.getBindingLayout().txtCategory.setText(localDataSet.get(position).getCategory()+" "+localDataSet.get(position).getSubCategory());
+        holder.getBindingLayout().txtCategory.setText(product.getCategory()+" "+product.getSubCategory());
 
-        holder.getBindingLayout().txtQuantity.setText("Quantity : "+localDataSet.get(position).getQuantity());
+        holder.getBindingLayout().txtQuantity.setText("Quantity : "+product.getQuantity());
 
-        Glide.with(context).load(localDataSet.get(position).getImg()).into(holder.getBindingLayout().imgProduct);
+        Glide.with(context).load(product.getImg()).into(holder.getBindingLayout().imgProduct);
+
+        orderCart.getLsProduct().add(new OrderProduct(product.getProductId(), product.getProductName(), product.getPrice(), product.getQuantity()));
     }
 
     @Override

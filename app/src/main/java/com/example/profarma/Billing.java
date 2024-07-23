@@ -15,13 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.profarma.adapter.Bill_product_adapter;
 import com.example.profarma.databinding.ActivityBillingBinding;
 import com.example.profarma.model.OrderCart;
+import com.example.profarma.model.OrderProduct;
 import com.example.profarma.model.Product;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class Billing extends AppCompatActivity {
     private ActivityBillingBinding binding;
-    private String name;
-    private String phone;
-    private String address;
+    private OrderCart orderCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,25 +33,30 @@ public class Billing extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         if (getIntent().getExtras() != null) {
-            name = getIntent().getExtras().getString("name");
-            phone = getIntent().getExtras().getString("phone");
-            address = getIntent().getExtras().getString("address");
+            orderCart = (OrderCart) getIntent().getSerializableExtra("orderCart");
         }
 
         setSupportActionBar(binding.toolbarBill);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(name + "'s Invoice");
+        actionBar.setTitle(orderCart.getCompanyName() + "'s Invoice");
 
-        binding.txtCompanyAddress.setText(address);
-        binding.txtPersonName.setText(name);
+        binding.txtCompanyAddress.setText(orderCart.getCompanyAddress());
+        binding.txtPersonName.setText(orderCart.getCompanyName());
+        binding.txtBillNoShow.setText(orderCart.getOrderId());
 
-        Bill_product_adapter adapter = new Bill_product_adapter(this);
+        Date date = new Date(Long.parseLong(orderCart.getOrderId()));
+        // Format the date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String formattedDate = dateFormat.format(date);
+        binding.txtTodayDate.setText(formattedDate);
+
+        Bill_product_adapter adapter = new Bill_product_adapter(this,orderCart.getLsProduct());
         binding.lsProductView.setAdapter(adapter);
         binding.lsProductView.setLayoutManager(new LinearLayoutManager(this));
 
         binding.btnProceedBill.setOnClickListener(v -> {
             binding.btnProceedBill.setVisibility(View.GONE);
-            PdfUtils.generatePdfFromView(binding.scrollView, name+"'s Invoice");
+            PdfUtils.generatePdfFromView(binding.scrollView, orderCart.getCompanyName() +"'s Invoice");
         });
 
         Notification notification = new Notification.Builder(this)
@@ -57,13 +65,13 @@ public class Billing extends AppCompatActivity {
 
 
         binding.txtTotalItems.setText("Total Items: " + adapter.getItemCount());
-        int total=0, quantity=0;
-        for(Product product: OrderCart.getLsProduct()){
-            int quan = Integer.parseInt(product.getQuantity());
+        float total=0, quantity=0;
+        for(OrderProduct product: orderCart.getLsProduct()){
+            float quan = Float.parseFloat(product.getProductQty());
             quantity += quan;
-            total += quantity * Integer.parseInt(product.getPrice());
+            total += quantity * Float.parseFloat(product.getProductPrice());
         }
-        binding.txtTotalItems.setText(String.valueOf(OrderCart.getLsProduct().size()));
+        binding.txtTotalItems.setText(String.valueOf(orderCart.getLsProduct().size()));
         binding.txtTotalAmount.setText(String.valueOf(total));
         binding.txtTotalQuantity.setText(String.valueOf(quantity));
     }
@@ -71,6 +79,6 @@ public class Billing extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        OrderCart.getLsProduct().clear();
+        orderCart.getLsProduct().clear();
     }
 }

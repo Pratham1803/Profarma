@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.profarma.databinding.ActivityEmpHomeBinding;
 import com.example.profarma.fragment.Cart;
 import com.example.profarma.fragment.EmpHome;
+import com.example.profarma.fragment.History;
 import com.example.profarma.model.OrderCart;
 
 public class EmployeeHome extends AppCompatActivity{
@@ -55,7 +56,7 @@ public class EmployeeHome extends AppCompatActivity{
                 changeFragment(new Cart());
                 return true;
             } else if(id == R.id.menuHistory){
-                Toast.makeText(this, "History Will Display Later...", Toast.LENGTH_SHORT).show();
+                changeFragment(new History());
                 return true;
             } else if(id == R.id.menuProfile){
                 Toast.makeText(this, "Profile Will Display Later...", Toast.LENGTH_SHORT).show();
@@ -75,11 +76,12 @@ public class EmployeeHome extends AppCompatActivity{
             changeFragment(new EmpHome());
         }
 
-        binding.txtCartCount.setText(String.valueOf(OrderCart.getLsProduct().size()));
         binding.imgCart.setOnClickListener(v -> {
             binding.bottomNavigationView.setSelectedItemId(R.id.menuCart);
             changeFragment(new Cart());
         });
+
+        binding.txtCartCount.setText(String.valueOf(Params.getArrCart().size()));
     }
 
     public void onRequestPermissionsResult(int requestCode,
