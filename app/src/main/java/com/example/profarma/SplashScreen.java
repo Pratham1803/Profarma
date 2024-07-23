@@ -44,7 +44,7 @@ public class SplashScreen extends AppCompatActivity {
                 binding.imgLogo.clearAnimation();
                 binding.imageView.clearAnimation();
                 binding.txtAppName.clearAnimation();
-                startActivity(new Intent(context, LoginActivity.class));
+                startActivity(new Intent(context, AdminHome.class));
                 finish();
             }
         }, 3000);

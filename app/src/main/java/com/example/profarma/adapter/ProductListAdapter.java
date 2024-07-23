@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.profarma.Params;
 import com.example.profarma.R;
 import com.example.profarma.databinding.ActivityProductListBinding;
 import com.example.profarma.databinding.LayoutProductBinding;
@@ -20,7 +22,7 @@ import com.example.profarma.model.Product;
 import java.util.ArrayList;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
-    private ArrayList<Product> localDataSet;
+    private ArrayList<String> localDataSet;
     private Context context;
     private ActivityProductListBinding parent_binding;
 
@@ -34,7 +36,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    Product product = localDataSet.get(position);
+                    Product product = Params.getMapProduct().get(localDataSet.get(position));
                     int quantity = Integer.parseInt(bindingLayout.txtQuantity.getText().toString());
                     if (quantity > 0) {
                         quantity--;
@@ -48,7 +50,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    Product product = localDataSet.get(position);
+                    Product product = Params.getMapProduct().get(localDataSet.get(position));
                     int quantity = Integer.parseInt(bindingLayout.txtQuantity.getText().toString());
                     quantity++;
                     product.setQuantity(String.valueOf(quantity));
@@ -72,7 +74,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                     txtQuantity.setText(String.valueOf(cartCount));
                     int position = getAdapterPosition();
 
-                    OrderCart.getLsProduct().add(0, localDataSet.get(position));
+                    OrderCart.getLsProduct().add(0, Params.getMapProduct().get(localDataSet.get(position)));
                     OrderCart.getLsProduct().get(0).setQuantity(String.valueOf(quantity));
                     localDataSet.remove(position);
                     notifyItemRemoved(position);
@@ -87,13 +89,13 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     }
 
-    public ProductListAdapter(ArrayList<Product> dataSet, Context context, ActivityProductListBinding parent_binding) {
+    public ProductListAdapter(ArrayList<String> dataSet, Context context, ActivityProductListBinding parent_binding) {
         this.localDataSet = dataSet;
         this.context = context;
         this.parent_binding = parent_binding;
     }
 
-    public void setLocalDataSet(ArrayList<Product> dataSet){
+    public void setLocalDataSet(ArrayList<String> dataSet){
         this.localDataSet = dataSet;
         notifyDataSetChanged();
     }
@@ -108,10 +110,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = localDataSet.get(position);
+        Product product = Params.getMapProduct().get(localDataSet.get(position));
         holder.getBindingLayout().txtProductName.setText(product.getProductName());
         holder.getBindingLayout().txtProductPrice.setText("Price: ₹" + product.getPrice());
-        holder.bindingLayout.imgProduct.setImageResource(product.getImg());
+        Glide.with(context).load(product.getImg()).into(holder.getBindingLayout().imgProduct);
     }
 
     @Override

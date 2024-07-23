@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "93404352797",
+    "firebase_url": "https://profarma-d2f40-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "profarma-d2f40",
+    "storage_bucket": "profarma-d2f40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93404352797:android:c0cdcca5f50a5b89f8d1f4",
+        "android_client_info": {
+          "package_name": "com.example.profarma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmSRgP4xlFXw8NqpAR_9fy6_KY2XnxFZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

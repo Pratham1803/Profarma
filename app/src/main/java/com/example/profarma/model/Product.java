@@ -7,14 +7,14 @@ public class Product implements Serializable {
     private String productName;
     private String quantity;
     private String price;
-    private int img;
+    private String img;
     private String category;
     private String subCategory;
 
     public Product() {
     }
 
-    public Product(String productId, String productName, String quantity, String price,int img,String category,String subCategory) {
+    public Product(String productId, String productName, String quantity, String price,String img,String category,String subCategory) {
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
@@ -40,11 +40,11 @@ public class Product implements Serializable {
         this.category = category;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 

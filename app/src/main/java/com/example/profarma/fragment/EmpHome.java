@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.profarma.Params;
 import com.example.profarma.R;
 import com.example.profarma.adapter.CategoryAdapter;
 import com.example.profarma.databinding.FragmentEmpHomeBinding;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class EmpHome extends Fragment {
     private FragmentEmpHomeBinding binding;
     private CategoryAdapter categoryAdapter;
-    private ArrayList<Category> categoryList;
+    private ArrayList<String> categoryList;
 
     public EmpHome() {
         // Required empty public constructor
@@ -30,12 +31,7 @@ public class EmpHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentEmpHomeBinding.inflate(inflater, container, false);
-        categoryList = new ArrayList<>();
-        categoryList.add(new Category("1", "New Arrival Products", new ArrayList<>()));
-        categoryList.add(new Category("2", "Dairy", new ArrayList<>()));
-        categoryList.add(new Category("3", "Cookies", new ArrayList<>()));
-        categoryList.add(new Category("4", "Cheese", new ArrayList<>()));
-        categoryList.add(new Category("5", "Butter & Oil", new ArrayList<>()));
+        categoryList = new ArrayList<>(Params.getMapProductCategory().keySet());
 
         categoryAdapter = new CategoryAdapter(categoryList, binding.getRoot().getContext());
         binding.recyclerViewCategory.setAdapter(categoryAdapter);
@@ -45,9 +41,9 @@ public class EmpHome extends Fragment {
         binding.editTextSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                ArrayList<Category> searchList = new ArrayList<>();
-                for(Category category: categoryList){
-                    if(category.getCategoryName().toLowerCase().contains(query.toLowerCase())){
+                ArrayList<String> searchList = new ArrayList<>();
+                for(String category: categoryList){
+                    if(category.toLowerCase().contains(query.toLowerCase())){
                         searchList.add(category);
                     }
                 }
@@ -57,9 +53,9 @@ public class EmpHome extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<Category> searchList = new ArrayList<>();
-                for(Category category: categoryList){
-                    if(category.getCategoryName().toLowerCase().contains(newText.toLowerCase())){
+                ArrayList<String> searchList = new ArrayList<>();
+                for(String category: categoryList){
+                    if(category.toLowerCase().contains(newText.toLowerCase())){
                         searchList.add(category);
                     }
                 }

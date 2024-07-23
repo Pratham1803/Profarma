@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.profarma.R;
 import com.example.profarma.databinding.LayoutCartProductBinding;
 import com.example.profarma.model.Product;
@@ -62,7 +63,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartAdapterVie
 
         holder.getBindingLayout().txtQuantity.setText("Quantity : "+localDataSet.get(position).getQuantity());
 
-        holder.getBindingLayout().imgProduct.setImageResource(localDataSet.get(position).getImg());
+        Glide.with(context).load(localDataSet.get(position).getImg()).into(holder.getBindingLayout().imgProduct);
     }
 
     @Override

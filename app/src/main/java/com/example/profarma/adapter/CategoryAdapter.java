@@ -19,7 +19,7 @@ import com.example.profarma.model.Category;
 import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
-    private ArrayList<Category> localDataSet;
+    private ArrayList<String> localDataSet;
     private Context context;
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -29,9 +29,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             super(itemView);
             bindingLayout = LayoutCategoryBinding.bind(itemView);
             bindingLayout.layoutItem.setOnClickListener(this);
-            bindingLayout.layoutLarge.setOnClickListener(this);
-            bindingLayout.layoutMedium.setOnClickListener(this);
-            bindingLayout.layoutSmall.setOnClickListener(this);
         }
 
         public LayoutCategoryBinding getBindingLayout() {
@@ -42,39 +39,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         public void onClick(View v) {
             LinearLayout layout = (LinearLayout) v;
 
-            Category category = localDataSet.get(getAdapterPosition());
-            if (layout.getId() == R.id.layoutItem) {
-                if (bindingLayout.layoutSubCategory.getVisibility() == View.VISIBLE)
-                    bindingLayout.layoutSubCategory.setVisibility(View.GONE);
-                else if (bindingLayout.layoutSubCategory.getVisibility() == View.GONE)
-                    bindingLayout.layoutSubCategory.setVisibility(View.VISIBLE);
+            String category = localDataSet.get(getAdapterPosition());
 
-                bindingLayout.imgArrow.setRotation(bindingLayout.layoutSubCategory.getVisibility() == View.VISIBLE ? 180 : 0);
-                return;
-            } else {
-                if (layout.getId() == R.id.layoutLarge)
-                    category.setSubCategory("Large");
-                else if (layout.getId() == R.id.layoutMedium)
-                    category.setSubCategory("Medium");
-                else if (layout.getId() == R.id.layoutSmall)
-                    category.setSubCategory("Small");
-
-                bindingLayout.layoutSubCategory.setVisibility(View.GONE);
-                bindingLayout.imgArrow.setRotation(0);
-
-                Intent intent = new Intent(context, ProductList.class);
-                intent.putExtra("Category", category);
-                context.startActivity(intent);
-            }
+            Intent intent = new Intent(context, ProductList.class);
+            intent.putExtra("Category", category);
+            context.startActivity(intent);
         }
+
     }
 
-    public CategoryAdapter(ArrayList<Category> dataSet, Context context) {
+    public CategoryAdapter(ArrayList<String> dataSet, Context context) {
         this.localDataSet = dataSet;
         this.context = context;
     }
 
-    public void setLocalDataSet(ArrayList<Category> localDataSet){
+    public void setLocalDataSet(ArrayList<String> localDataSet) {
         this.localDataSet = localDataSet;
         notifyDataSetChanged();
     }
@@ -88,7 +67,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        holder.getBindingLayout().txtCategoryName.setText(localDataSet.get(position).getCategoryName());
+        holder.getBindingLayout().txtCategoryName.setText(localDataSet.get(position));
     }
 
     @Override

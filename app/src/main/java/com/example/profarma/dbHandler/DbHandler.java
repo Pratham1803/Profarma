@@ -1,6 +1,5 @@
 package com.example.profarma.dbHandler;
 
-import android.app.Notification;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,20 +16,20 @@ import java.util.List;
 public class DbHandler extends SQLiteOpenHelper {
     Context context;
     public DbHandler(Context context) {
-        super(context, Params.DATABASE_NAME, null,Params.DATABASE_VERSION);
+        super(context, Params2.DATABASE_NAME, null, Params2.DATABASE_VERSION);
         this.context = context;
         Log.d("dbQuery", "Database created 1");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(Params.CREATE_ENTRY);
+        db.execSQL(Params2.CREATE_ENTRY);
         Log.d("dbQuery", "Table Created: ");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String cmd = "drop table "+Params.TABLE_NAME;
+        String cmd = "drop table "+ Params2.TABLE_NAME;
         db.execSQL(cmd);
     }
 
@@ -39,13 +38,13 @@ public class DbHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
 
-            values.put(Params.KEY_NAME, p.getProductName());
-            values.put(Params.KEY_QUANTITY, p.getQuantity());
-            values.put(Params.KEY_PRICE, p.getPrice());
-            values.put(Params.KEY_CATEGORY, p.getCategory());
-            values.put(Params.KEY_SUBCATEGORY, p.getSubCategory());
+            values.put(Params2.KEY_NAME, p.getProductName());
+            values.put(Params2.KEY_QUANTITY, p.getQuantity());
+            values.put(Params2.KEY_PRICE, p.getPrice());
+            values.put(Params2.KEY_CATEGORY, p.getCategory());
+            values.put(Params2.KEY_SUBCATEGORY, p.getSubCategory());
 
-            long l = db.insert(Params.TABLE_NAME, null, values);
+            long l = db.insert(Params2.TABLE_NAME, null, values);
             Log.d("dbQuery", "Record added" + l);
             db.close();
             Toast.makeText(context, "Data Inserted!!", Toast.LENGTH_SHORT).show();
@@ -58,7 +57,7 @@ public class DbHandler extends SQLiteOpenHelper {
         ArrayList<Product> products = new ArrayList<>();
         try {
             SQLiteDatabase db = this.getReadableDatabase();
-            String cmd = "SELECT * FROM " + Params.TABLE_NAME + " WHERE " + Params.KEY_CATEGORY + " = '" + category + "' AND " + Params.KEY_SUBCATEGORY + " = '" + subCategory + "'";
+            String cmd = "SELECT * FROM " + Params2.TABLE_NAME + " WHERE " + Params2.KEY_CATEGORY + " = '" + category + "' AND " + Params2.KEY_SUBCATEGORY + " = '" + subCategory + "'";
 
             Cursor cursor = db.rawQuery(cmd, null);
             Log.d("dbQuery", "Cursor: " + cursor);
@@ -96,7 +95,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public Contact findContact(int id){
         Contact c = new Contact();
         SQLiteDatabase db = this.getReadableDatabase();
-        String cmd = "Select * from "+Params.TABLE_NAME+" where "+Params.KEY_ID+" = "+id;
+        String cmd = "Select * from "+ Params2.TABLE_NAME+" where "+ Params2.KEY_ID+" = "+id;
 
         Cursor cursor = db.rawQuery(cmd,null);
         cursor.moveToFirst();
@@ -112,7 +111,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public List<Integer> getAllId(){
         List<Integer> arrId = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String cmd = "Select "+ Params.KEY_ID+ " from "+Params.TABLE_NAME;
+        String cmd = "Select "+ Params2.KEY_ID+ " from "+ Params2.TABLE_NAME;
 
         Cursor cursor = db.rawQuery(cmd,null);
 
@@ -128,7 +127,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     public void delete(int id){
         try {
-            String cmd = String.format("delete from %s where %s= %s;", Params.TABLE_NAME,Params.KEY_ID,id);
+            String cmd = String.format("delete from %s where %s= %s;", Params2.TABLE_NAME, Params2.KEY_ID,id);
             SQLiteDatabase db = this.getWritableDatabase();
             db.execSQL(cmd);
             Toast.makeText(context, "Record Removed!!", Toast.LENGTH_SHORT).show();

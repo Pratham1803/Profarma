@@ -39,108 +39,108 @@
             android:src="@drawable/ic_arrow_drop_down" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutSubCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/simple_shape"
-        android:elevation="10dp"
-        android:visibility="gone"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layoutSubCategory"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginHorizontal="10dp"-->
+<!--        android:layout_marginVertical="10dp"-->
+<!--        android:background="@drawable/simple_shape"-->
+<!--        android:elevation="10dp"-->
+<!--        -->
+<!--        android:orientation="vertical">-->
 
-        <LinearLayout
-            android:id="@+id/layoutLarge"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="5dp"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/layoutLarge"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:layout_marginVertical="5dp"-->
+<!--            android:orientation="horizontal">-->
 
-            <TextView
-                android:id="@+id/txtLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Large"
-                android:textColor="@color/font_color_dark"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:id="@+id/txtLarge"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Large"-->
+<!--                android:textColor="@color/font_color_dark"-->
+<!--                android:textSize="20dp"-->
+<!--                android:textStyle="bold" />-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/arrow" />
-        </LinearLayout>
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:src="@drawable/arrow" />-->
+<!--        </LinearLayout>-->
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="@color/font_color_dark" />
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:backgroundTint="@color/font_color_dark" />-->
 
-        <LinearLayout
-            android:id="@+id/layoutMedium"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="5dp"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/layoutMedium"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:layout_marginVertical="5dp"-->
+<!--            android:orientation="horizontal">-->
 
-            <TextView
-                android:id="@+id/txtMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Medium"
-                android:textColor="@color/font_color_dark"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:id="@+id/txtMedium"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Medium"-->
+<!--                android:textColor="@color/font_color_dark"-->
+<!--                android:textSize="20dp"-->
+<!--                android:textStyle="bold" />-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/arrow" />
-        </LinearLayout>
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:src="@drawable/arrow" />-->
+<!--        </LinearLayout>-->
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="@color/font_color_dark" />
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:backgroundTint="@color/font_color_dark" />-->
 
-        <LinearLayout
-            android:id="@+id/layoutSmall"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="5dp"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/layoutSmall"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:layout_marginVertical="5dp"-->
+<!--            android:orientation="horizontal">-->
 
-            <TextView
-                android:id="@+id/txtSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Small"
-                android:textColor="@color/font_color_dark"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:id="@+id/txtSmall"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Small"-->
+<!--                android:textColor="@color/font_color_dark"-->
+<!--                android:textSize="20dp"-->
+<!--                android:textStyle="bold" />-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/arrow" />
-        </LinearLayout>
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:src="@drawable/arrow" />-->
+<!--        </LinearLayout>-->
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginHorizontal="10dp"
-            android:backgroundTint="@color/font_color_dark" />
-    </LinearLayout>
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:backgroundTint="@color/font_color_dark" />-->
+<!--    </LinearLayout>-->
 </LinearLayout>
