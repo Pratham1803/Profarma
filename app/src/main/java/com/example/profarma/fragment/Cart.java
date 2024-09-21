@@ -14,6 +14,9 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +29,7 @@ import com.example.profarma.PdfUtils;
 import com.example.profarma.R;
 import com.example.profarma.adapter.CartAdapter;
 import com.example.profarma.databinding.FragmentCartBinding;
+import com.example.profarma.model.CustomerModel;
 import com.example.profarma.model.OrderCart;
 import com.example.profarma.model.OrderProduct;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -42,6 +46,7 @@ public class Cart extends Fragment {
     private FragmentCartBinding binding;
     private Context context;
     private OrderCart orderCart;
+    private AlertDialog dialog;
 
     public Cart() {
         // Required empty public constructor
@@ -56,6 +61,11 @@ public class Cart extends Fragment {
         orderCart = new OrderCart();
         orderCart.setLsProduct(new ArrayList<>());
 
+        if (Params.getArrCart().size() == 0) {
+            binding.recyclerViewProduct.setVisibility(View.GONE);
+            binding.btnCheckout.setVisibility(View.GONE);
+        }
+
         CartAdapter cartAdapter = new CartAdapter(Params.getArrCart(), context, orderCart);
         binding.recyclerViewProduct.setAdapter(cartAdapter);
 
@@ -67,9 +77,30 @@ public class Cart extends Fragment {
                 builder.setTitle("Enter Customer Details :");
                 View view = LayoutInflater.from(context).inflate(R.layout.person_details_layput, null);
                 Button btnGeneratePdf = view.findViewById(R.id.btnGenerateBill);
-                EditText etName = view.findViewById(R.id.edtName);
+                AutoCompleteTextView etName = view.findViewById(R.id.edtName);
                 EditText etPhone = view.findViewById(R.id.edtNum);
                 EditText etAddress = view.findViewById(R.id.edtAddress);
+
+                ArrayList<String> name = new ArrayList<>();
+                for (CustomerModel customer : Params.getArrCustomer()) {
+                    name.add(customer.getName());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, name);
+                etName.setAdapter(adapter);
+
+                etName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String name = parent.getItemAtPosition(position).toString();
+                        for (CustomerModel customer : Params.getArrCustomer()) {
+                            if (customer.getName().equals(name)) {
+                                etPhone.setText(customer.getContact());
+                                etAddress.setText(customer.getAddress());
+                            }
+                        }
+                    }
+                });
 
                 btnGeneratePdf.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -87,14 +118,16 @@ public class Cart extends Fragment {
                         addToDb();
                         intent.putExtra("orderCart", orderCart);
                         startActivity(intent);
+                        binding.btnCheckout.setVisibility(View.GONE);
+                        dialog.dismiss();
                     }
                 });
 
                 builder.setView(view);
-                builder.create().show();
+                dialog = builder.create();
+                dialog.show();
             }
         });
-        Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
 
         binding.btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,10 +141,10 @@ public class Cart extends Fragment {
         return binding.getRoot();
     }
 
-    private void addToDb(){
+    private void addToDb() {
         float total = 0;
         orderCart.setOrderId(System.currentTimeMillis() + "");
-        for(OrderProduct product : orderCart.getLsProduct()){
+        for (OrderProduct product : orderCart.getLsProduct()) {
             total += Float.parseFloat(product.getProductPrice()) * Float.parseFloat(product.getProductQty());
         }
         orderCart.setTotalAmt(String.valueOf(total));

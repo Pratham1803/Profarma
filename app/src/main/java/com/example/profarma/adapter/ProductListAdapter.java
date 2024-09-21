@@ -29,7 +29,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             bindingLayout = LayoutProductBinding.bind(itemView);
         }
 
-        public void bind(int position, ProductModel product) {
+        public void bind(ProductModel product) {
+            bindingLayout.txtProductName.setText(product.getProductName());
+            bindingLayout.txtProductPrice.setText("Price: " + product.getPrice());
+
             bindingLayout.btnAddToCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -45,27 +48,24 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             });
 
         }
-
-        public LayoutProductBinding getBindingLayout() {
-            return bindingLayout;
-        }
     }
 
     public ProductListAdapter(Context context) {
         this.context = context;
     }
 
-    public void setLocalDataSet(ArrayList<ProductModel> localDataSet, String category) {
-        if (localDataSet == null) {
-            localDataSet = new ArrayList<>();
-            for (ProductModel product : Params.getMapProduct().values()) {
-                if (product.getCategory().equals(category))
-                    localDataSet.add(product);
+    public void setLocalDataSet(String category) {
+        this.localDataSet.clear();
+        for (ProductModel product : Params.getMapProduct().values()) {
+            if (product.getCategory().equals(category)) {
+                this.localDataSet.add(product);
             }
         }
-        this.localDataSet = localDataSet;
-
         notifyDataSetChanged();
+    }
+
+    public ArrayList<ProductModel> getLocalDataSet() {
+        return localDataSet;
     }
 
     @NonNull
@@ -79,9 +79,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ProductListViewHolder holder, int position) {
         ProductModel product = localDataSet.get(position);
-        holder.getBindingLayout().txtProductName.setText(product.getProductName());
-        holder.getBindingLayout().txtProductPrice.setText("Price: " + product.getPrice());
-        holder.bind(position, product);
+        holder.bind( product);
     }
 
     @Override

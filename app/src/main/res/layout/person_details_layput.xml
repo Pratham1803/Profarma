@@ -6,7 +6,7 @@
     android:paddingVertical="15dp"
     android:backgroundTint="@color/white">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -45,16 +45,15 @@
         android:layout_margin="15dp"
         android:padding="10dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/btnGenerateBill"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        style="@style/btnContainedStyle"
         android:text="Generate Bill"
         android:textStyle="bold"
         android:textSize="24dp"
-        android:textColor="@color/font_color_dark"
         android:fontFamily="@font/inria_sans"
-        android:background="@drawable/btn_shape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtAddress"

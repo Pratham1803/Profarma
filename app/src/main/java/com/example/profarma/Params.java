@@ -1,5 +1,6 @@
 package com.example.profarma;
 
+import com.example.profarma.model.CustomerModel;
 import com.example.profarma.model.ProductModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -16,6 +17,7 @@ public class Params {
     private static HashMap<String, ProductModel> mapProduct; // Map of products
     private static HashMap<String, ArrayList<String>> mapProductCategory; // Map of product categories
     private static ArrayList<String> arrCart; // List of product categories
+    private static ArrayList<CustomerModel> arrCustomer; // List of customers
 
     // Get the instance of the Params class
     private Params() {
@@ -24,10 +26,19 @@ public class Params {
         mapProduct = new HashMap<>(); // Initialize the map of products
         mapProductCategory = new HashMap<>(); // Initialize the map of product categories
         arrCart = new ArrayList<>(); // Initialize the list of product categories
+        arrCustomer = new ArrayList<>(); // Initialize the list of customers
     }
 
     public static ArrayList<String> getArrCart() {
         return arrCart;
+    }
+
+    public static ArrayList<CustomerModel> getArrCustomer() {
+        return arrCustomer;
+    }
+
+    public static void setArrCustomer(ArrayList<CustomerModel> arrCustomer) {
+        Params.arrCustomer = arrCustomer;
     }
 
     public static void setArrCart(ArrayList<String> arrCart) {

@@ -20,6 +20,7 @@ import android.view.MenuItem;
 
 import com.example.profarma.databinding.ActivityEmpHomeBinding;
 import com.example.profarma.fragment.Cart;
+import com.example.profarma.fragment.Customer;
 import com.example.profarma.fragment.History;
 import com.example.profarma.fragment.Home;
 import com.example.profarma.fragment.Product;
@@ -28,7 +29,6 @@ import com.google.android.material.navigation.NavigationView;
 public class EmployeeHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityEmpHomeBinding bind;
     private static final int STORAGE_PERMISSION_CODE = 101;
-    private int current_page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class EmployeeHome extends AppCompatActivity implements NavigationView.On
         bind.mainDrawerLayout.addDrawerListener(toggle); // adding listener to drawer
         toggle.syncState(); // syncing the drawer
 
+        changeFragment(new Home(), "ProFarma"); // setting home fragment as default fragment
 //        binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 //            int id = item.getItemId();
 //
@@ -115,22 +116,20 @@ public class EmployeeHome extends AppCompatActivity implements NavigationView.On
     // on drawer navigating item select listener
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = current_page = item.getItemId(); // storing currently selected id
+        int id = item.getItemId(); // storing currently selected id
 
         if (id == R.id.nav_create_order) { // home fragment selected
             changeFragment(new Cart(), "Cart");
         } else if (id == R.id.nav_add_product) { // profile fragment selected
             changeFragment(new Product(), "Products");
-        } else if (id == R.id.nav_add_category) { // profile fragment selected
-            changeFragment(new Product(), "Products");
         } else if (id == R.id.nav_new_customer) { // Products fragment selected
-
+            changeFragment(new Customer(), "Customers");
         } else if (id == R.id.nav_show_history) { // category fragment
             changeFragment(new History(), "History");
         } else if (id == R.id.nav_logout) { // user click on settings
             logOut();
         } else if (id == R.id.nav_home) {
-            changeFragment(new Home(), "Home");
+            changeFragment(new Home(), "ProFarma");
         }
         bind.mainDrawerLayout.closeDrawer(GravityCompat.START); // when any item is click after that close the drawer
         return true;
@@ -167,6 +166,16 @@ public class EmployeeHome extends AppCompatActivity implements NavigationView.On
             bind.toolbar.setTitle(title); // setting title of the screen in action bar
         } catch (Exception e) {
             Log.d("ErrorMsg", "changeFragment: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_fragment_view);
+        if (currentFragment instanceof Home) {
+            super.onBackPressed();
+        } else {
+            changeFragment(new Home(), "ProFarma");
         }
     }
 }

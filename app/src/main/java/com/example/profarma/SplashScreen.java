@@ -17,8 +17,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import com.example.profarma.adapter.CustomerAdapter;
 import com.example.profarma.databinding.ActivitySplashScreenBinding;
 import com.example.profarma.fragment.Product;
+import com.example.profarma.model.CustomerModel;
 import com.example.profarma.model.ProductModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +41,8 @@ public class SplashScreen extends AppCompatActivity {
 
         dbLoadProducts();
         loadCart();
+        loadCustomers();
+
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         context = binding.getRoot().getContext();
         setContentView(binding.getRoot());
@@ -111,6 +115,7 @@ public class SplashScreen extends AppCompatActivity {
                         ArrayList<String> productList = new ArrayList<>();
                         for (DataSnapshot product : category.getChildren()) {
                             ProductModel productData = product.getValue(ProductModel.class);
+                            productData.setProductId(product.getKey());
                             Params.getMapProduct().put(productData.getProductId(), productData);
                             productList.add(productData.getProductId());
                         }
@@ -140,6 +145,24 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("ErrorMsg", "onCancelled: " + error.getMessage());
+            }
+        });
+    }
+
+    private void loadCustomers(){
+        Params.getDbReference().child("Customer").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Params.getArrCustomer().clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    CustomerModel customer = dataSnapshot.getValue(CustomerModel.class);
+                    Params.getArrCustomer().add(customer);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show();
             }
         });
     }
