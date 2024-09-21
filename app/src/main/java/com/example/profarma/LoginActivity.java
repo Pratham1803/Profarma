@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -32,21 +33,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
             @Override
             public void onClick(View v) {
                 if (isDetailsFilled()) {
-                    if (binding.edUserName.getText().toString().equals("admin") && binding.edPsw.getText().toString().equals("admin") && (binding.chkAdmin.isChecked())) {
-                        startActivity(new Intent(context, AdminHome.class));
+                    if (binding.edUserName.getText().toString().equals("admin") && binding.edPsw.getText().toString().equals("admin")) {
+                        startActivity(new Intent(context, EmployeeHome.class));
                         Toast.makeText(context, "Login Successful, Welcome Admin", Toast.LENGTH_LONG).show();
+                        saveLoginStatus(true);
                         finish();
-                    } else if ((binding.edUserName.getText().toString().equals("user")) && (binding.edPsw.getText().toString().equals("user"))) {
-                        if (binding.chkAdmin.isChecked()) {
-                            Toast.makeText(context, "Invalid User Name or Password for Admin!!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            startActivity(new Intent(context, EmployeeHome.class));
-                            Toast.makeText(context, "Login Successful", Toast.LENGTH_LONG).show();
-                            finish();
-                        }
                     } else {
                         Toast.makeText(context, "Invalid Username or Password", Toast.LENGTH_LONG).show();
+                        saveLoginStatus(false);
                     }
+                }else {
+                    saveLoginStatus(false);
                 }
             }
         });
@@ -75,5 +72,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
             ed.setBackground(context.getDrawable(R.drawable.textbox_shape));
             ed.setTextColor(context.getColor(R.color.font_color));
         }
+    }
+
+    private void saveLoginStatus(Boolean isLoggedIn) {
+        SharedPreferences sharedPreferences =
+                getSharedPreferences("MySharedPref", MODE_PRIVATE); // Get the SharedPreferences instance
+        SharedPreferences.Editor editor = sharedPreferences.edit(); // Get the SharedPreferences editor instance
+        editor.putBoolean("isLoggedIn", isLoggedIn); // Save the login status to SharedPreferences
+        editor.putString(
+                "userNameString",
+                binding.edUserName.getText().toString()
+        ); // Save the user name to SharedPreferences
+        editor.putString(
+                "userPswString",
+                binding.edPsw.getText().toString()
+        ); // Save the user Password to SharedPreferences
+        editor.apply(); // Apply the changes to SharedPreferences
     }
 }

@@ -41,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:background="@drawable/textbox_shape"
                 android:hint="Enter Quantity Here"
                 android:inputType="number"
@@ -135,12 +136,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:paddingStart="10dp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:layout_marginTop="20dp"
                 android:elevation="10dp"
                 app:cardCornerRadius="90dp">
@@ -158,17 +161,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:fontFamily="@font/inria_sans"
                 android:text="Add Image"
                 android:textAlignment="center"
                 android:textSize="20dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/btnAddProduct"
+                style="@style/btnContainedStyle"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/btn_shape"
                 android:text="Add Product"
                 android:textColor="@color/white"
                 android:textSize="20dp" />

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.profarma.Billing;
 import com.example.profarma.Params;
@@ -27,6 +28,7 @@ import com.example.profarma.adapter.CartAdapter;
 import com.example.profarma.databinding.FragmentCartBinding;
 import com.example.profarma.model.OrderCart;
 import com.example.profarma.model.OrderProduct;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import org.w3c.dom.Text;
 
@@ -34,6 +36,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Cart extends Fragment {
     private FragmentCartBinding binding;
@@ -47,13 +50,14 @@ public class Cart extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentCartBinding.inflate(inflater, container, false);
+        binding = FragmentCartBinding.bind(inflater.inflate(R.layout.fragment_cart, container, false));
         context = binding.getRoot().getContext();
 
         orderCart = new OrderCart();
         orderCart.setLsProduct(new ArrayList<>());
 
-        binding.recyclerViewProduct.setAdapter(new CartAdapter(Params.getArrCart(), getContext(), orderCart));
+        CartAdapter cartAdapter = new CartAdapter(Params.getArrCart(), context, orderCart);
+        binding.recyclerViewProduct.setAdapter(cartAdapter);
 
         binding.btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +92,16 @@ public class Cart extends Fragment {
 
                 builder.setView(view);
                 builder.create().show();
+            }
+        });
+        Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
+
+        binding.btnAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialToolbar toolbar = requireActivity().findViewById(R.id.toolbar);
+                toolbar.setTitle("Products");
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment_view, new Product()).commit();
             }
         });
 

@@ -2,34 +2,20 @@ package com.example.profarma.model;
 
 import java.io.Serializable;
 
-public class Product implements Serializable {
+public class ProductModel implements Serializable {
     private String productId;
     private String productName;
-    private String quantity;
     private String price;
-    private String img;
     private String category;
-    private String subCategory;
 
-    public Product() {
+    public ProductModel() {
     }
 
-    public Product(String productId, String productName, String quantity, String price,String img,String category,String subCategory) {
+    public ProductModel(String productId, String productName, String price, String category) {
         this.productId = productId;
         this.productName = productName;
-        this.quantity = quantity;
         this.price = price;
-        this.img = img;
         this.category = category;
-        this.subCategory = subCategory;
-    }
-
-    public String getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(String subCategory) {
-        this.subCategory = subCategory;
     }
 
     public String getCategory() {
@@ -38,14 +24,6 @@ public class Product implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
     }
 
     public String getProductId() {
@@ -62,14 +40,6 @@ public class Product implements Serializable {
 
     public void setProductName(String productName) {
         this.productName = productName;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
     }
 
     public String getPrice() {

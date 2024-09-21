@@ -2,21 +2,14 @@ package com.example.profarma;
 
 import android.app.Notification;
 import android.os.Bundle;
-import android.view.View;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.profarma.adapter.Bill_product_adapter;
 import com.example.profarma.databinding.ActivityBillingBinding;
 import com.example.profarma.model.OrderCart;
 import com.example.profarma.model.OrderProduct;
-import com.example.profarma.model.Product;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,9 +29,7 @@ public class Billing extends AppCompatActivity {
             orderCart = (OrderCart) getIntent().getSerializableExtra("orderCart");
         }
 
-        setSupportActionBar(binding.toolbarBill);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(orderCart.getCompanyName() + "'s Invoice");
+        binding.txtBillName.setText(orderCart.getCompanyName() + "'s Invoice");
 
         binding.txtCompanyAddress.setText(orderCart.getCompanyAddress());
         binding.txtPersonName.setText(orderCart.getCompanyName());
@@ -54,8 +45,11 @@ public class Billing extends AppCompatActivity {
         binding.lsProductView.setAdapter(adapter);
         binding.lsProductView.setLayoutManager(new LinearLayoutManager(this));
 
-        binding.btnProceedBill.setOnClickListener(v -> {
-            binding.btnProceedBill.setVisibility(View.GONE);
+        binding.imgDownload.setOnClickListener(v -> {
+            PdfUtils.generatePdfFromView(binding.scrollView, orderCart.getCompanyName() +"'s Invoice");
+        });
+
+        binding.imgShare.setOnClickListener(v -> {
             PdfUtils.generatePdfFromView(binding.scrollView, orderCart.getCompanyName() +"'s Invoice");
         });
 

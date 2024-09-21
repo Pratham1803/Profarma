@@ -10,9 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.profarma.R;
-import com.example.profarma.model.OrderCart;
 import com.example.profarma.model.OrderProduct;
-import com.example.profarma.model.Product;
 
 import java.util.List;
 

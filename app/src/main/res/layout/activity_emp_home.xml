@@ -6,98 +6,140 @@
     android:layout_height="match_parent"
     tools:context=".EmployeeHome">
 
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:background="@drawable/simple_shape"-->
+<!--        android:elevation="15dp"-->
+<!--        android:backgroundTint="@color/light_blue"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/fragment_container_view"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/toolbar"
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/linearLayoutTop"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/txtTitleProductList"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:fontFamily="@font/concert_one"-->
+<!--                android:text="Home"-->
+<!--                android:maxWidth="300dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="24dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintVertical_bias="0.5" />-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/cardViewCart"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_marginEnd="15dp"-->
+<!--                android:backgroundTint="#86FFFFFF"-->
+<!--                app:cardCornerRadius="25dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/txtCartCount"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:fontFamily="@font/inria_sans"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="0"-->
+<!--                    android:textAlignment="center"-->
+<!--                    android:textColor="@color/font_color_dark"-->
+<!--                    android:textSize="12sp" />-->
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imgCart"-->
+<!--                android:layout_width="35dp"-->
+<!--                android:layout_height="35dp"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:layout_marginEnd="25dp"-->
+<!--                android:src="@drawable/icon_cart"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/linearLayoutTop"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/linearLayoutTop"-->
+<!--                app:layout_constraintTop_toTopOf="@id/linearLayoutTop" />-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--    </androidx.cardview.widget.CardView>-->
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/main_drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/simple_shape"
-        android:elevation="15dp"
-        android:backgroundTint="@color/light_blue"
-        app:layout_constraintBottom_toTopOf="@id/fragment_container_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="0sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MainActivity"
+        tools:openDrawer="end">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayoutTop"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtTitleProductList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/concert_one"
-                android:text="Home"
-                android:maxWidth="300dp"
-                android:textColor="@color/white"
-                android:textSize="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:elevation="4dp"
+                android:background="@color/light_blue"
+                app:titleTextColor="@color/white"
+                app:subtitleTextAppearance="@font/inria_sans"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewCart"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="15dp"
-                android:backgroundTint="#86FFFFFF"
-                app:cardCornerRadius="25dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/txtCartCount"
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/main_fragment_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/inria_sans"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textAlignment="center"
-                    android:textColor="@color/font_color_dark"
-                    android:textSize="12sp" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_height="match_parent" />
 
-            <ImageView
-                android:id="@+id/imgCart"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="end"
-                android:layout_marginEnd="25dp"
-                android:src="@drawable/icon_cart"
-                app:layout_constraintBottom_toBottomOf="@id/linearLayoutTop"
-                app:layout_constraintEnd_toEndOf="@id/linearLayoutTop"
-                app:layout_constraintTop_toTopOf="@id/linearLayoutTop" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_drawer_view"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/drawer_header"
+            app:itemIconSize="26dp"
+            app:itemIconTint="@color/light_blue"
+            app:itemTextAppearance="@style/menu_text_style"
+            app:menu="@menu/drawer_menu" />
+    </androidx.drawerlayout.widget.DrawerLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/fragment_container_view"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/toolbar" />-->
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:elevation="10dp"
-        style="@style/Widget.Material3.BottomNavigationView.ActiveIndicator"
-        app:itemBackground="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_container_view"
-        app:menu="@menu/bottom_nav_menu" />
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottomNavigationView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="70dp"-->
+<!--        app:elevation="10dp"-->
+<!--        style="@style/Widget.Material3.BottomNavigationView.ActiveIndicator"-->
+<!--        app:itemBackground="@color/white"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/fragment_container_view"-->
+<!--        app:menu="@menu/bottom_nav_menu" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

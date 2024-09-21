@@ -1,6 +1,6 @@
 package com.example.profarma;
 
-import com.example.profarma.model.Product;
+import com.example.profarma.model.ProductModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -13,7 +13,7 @@ public class Params {
     private static final Params ourInstance = new Params(); // Instance of the Params class
     private static DatabaseReference dbReference; // Firebase database reference to refer the database
     private static StorageReference storageReference; // Firebase storage reference to store the files and images
-    private static HashMap<String, Product> mapProduct; // Map of products
+    private static HashMap<String, ProductModel> mapProduct; // Map of products
     private static HashMap<String, ArrayList<String>> mapProductCategory; // Map of product categories
     private static ArrayList<String> arrCart; // List of product categories
 
@@ -50,11 +50,11 @@ public class Params {
         Params.storageReference = storageReference;
     }
 
-    public static HashMap<String, Product> getMapProduct() {
+    public static HashMap<String, ProductModel> getMapProduct() {
         return mapProduct;
     }
 
-    public static void setMapProduct(HashMap<String, Product> mapProduct) {
+    public static void setMapProduct(HashMap<String, ProductModel> mapProduct) {
         Params.mapProduct = mapProduct;
     }
 

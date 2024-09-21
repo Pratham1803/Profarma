@@ -13,10 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.profarma.Params;
-import com.example.profarma.ProductList;
 import com.example.profarma.R;
 import com.example.profarma.databinding.LayoutCategoryBinding;
-import com.example.profarma.model.Category;
 
 import java.util.ArrayList;
 
@@ -43,10 +41,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
             String category = localDataSet.get(getAdapterPosition());
 
-            Intent intent = new Intent(context, ProductList.class);
-            intent.putExtra("Category", category);
-            context.startActivity(intent);
-            ((Activity) context).finish();
+//            Intent intent = new Intent(context, ProductList.class);
+//            intent.putExtra("Category", category);
+//            context.startActivity(intent);
+//            ((Activity) context).finish();
         }
 
     }

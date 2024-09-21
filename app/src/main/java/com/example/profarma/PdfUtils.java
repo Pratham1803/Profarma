@@ -1,12 +1,15 @@
 package com.example.profarma;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,10 +50,25 @@ public class PdfUtils {
             FileOutputStream fos = new FileOutputStream(file);
             document.writeTo(fos);
             fos.close();
-            Toast.makeText(view.getContext(), "PDF saved to document/ProFarma/"+fileName , Toast.LENGTH_LONG).show();
+
+            Toast.makeText(view.getContext(), "PDF saved to document/ProFarma/" + fileName, Toast.LENGTH_LONG).show();
+
+            // Share the PDF file via WhatsApp
+            Uri uri = FileProvider.getUriForFile(
+                    view.getContext(),
+                    view.getContext().getPackageName() + ".provider",
+                    file
+            );
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setDataAndType(uri, "application/pdf");
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            intent.setPackage("com.whatsapp");
+            view.getContext().startActivity(intent);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("ErrorMsg", "generatePdfFromView: "+e.getMessage());
+            Log.d("ErrorMsg", "generatePdfFromView: " + e.getMessage());
             Toast.makeText(view.getContext(), "Error creating PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             document.close();
